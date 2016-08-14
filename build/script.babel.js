@@ -7,15 +7,15 @@ var Todo = React.createClass({
 		return { editing: false };
 	},
 	edit: function edit() {
-		alert("edit todo");
+		console.log("edit todo");
 		this.setState({ editing: true });
 	},
 	remove: function remove() {
-		alert("Todo removed");
+		this.props.onRemove(this.props.index);
 	},
 	save: function save() {
 		var val = this.newValue.value;
-		alert("Todo " + val + " saved");
+		this.props.onChange(val, this.props.index);
 		this.setState({ editing: false });
 	},
 	todoDisplay: function todoDisplay() {
@@ -63,7 +63,36 @@ var TodoList = React.createClass({
 			todos: ['Call Henry', 'Pay Phone Bills', 'Make Dentist Appointment']
 		};
 	},
+	add: function add() {
+		var arr = this.state.todos;
+		var newTodo = this.newTodo.value;
+		arr.push(newTodo);
+		this.setState({ todos: arr });
+	},
+	remove: function remove(i) {
+		var arr = this.state.todos;
+		arr.splice(i, 1);
+		this.setState({ todos: arr });
+		console.log('Todo: ' + (i + 1) + ' removed');
+	},
+	update: function update(newValue, i) {
+		var arr = this.state.todos;
+		arr[i] = newValue;
+		this.setState({ todos: arr });
+	},
+	eachTodo: function eachTodo(todo, i) {
+		return React.createElement(
+			Todo,
+			{ key: i,
+				index: i,
+				onChange: this.update,
+				onRemove: this.remove },
+			todo
+		);
+	},
 	render: function render() {
+		var _this2 = this;
+
 		return React.createElement(
 			"div",
 			null,
@@ -78,10 +107,12 @@ var TodoList = React.createClass({
 				React.createElement(
 					"div",
 					{ className: "form-group" },
-					React.createElement("input", { className: "form-control", placeholder: "Add Todo" }),
+					React.createElement("input", { ref: function ref(_ref2) {
+							return _this2.newTodo = _ref2;
+						}, className: "form-control", placeholder: "Add Todo" }),
 					React.createElement(
 						"button",
-						{ className: "btn btn-default btn-sm" },
+						{ onClick: this.add, className: "btn btn-default btn-sm" },
 						"+"
 					)
 				)
@@ -89,13 +120,7 @@ var TodoList = React.createClass({
 			React.createElement(
 				"ul",
 				null,
-				this.state.todos.map(function (value, i) {
-					return React.createElement(
-						Todo,
-						{ key: i },
-						value
-					);
-				})
+				this.state.todos.map(this.eachTodo)
 			)
 		);
 	}
