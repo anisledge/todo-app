@@ -1,0 +1,48 @@
+body {
+	width: 100%;
+	padding-top: 58px;
+	background: #F9F9F9;
+	color:#484848;
+}
+
+.app {
+	background:#fff;
+	padding: 18px 48px;
+	border-radius:4px;
+}
+
+.todo {
+	padding: 15px 20px;
+	margin: 18px 0;
+	text-decoration: none;
+	list-style-type: none;
+	font-family: inherit;
+	font-size: 100%;
+	background-color: #e6e6e6;
+	border-left: 5px solid #666;
+	border-bottom-right-radius: 2px;
+	border-top-right-radius: 2px;
+}
+
+ul {
+	padding: 0;
+}
+
+.todo input {
+	display: inline-block;
+	background: transparent;
+}
+
+button, .todo input[type="checkbox"] {
+	margin: 0 10px;
+}
+li:hover .remove {
+	opacity: 1;
+}
+.remove {
+	opacity: 0;
+}
+
+.red {
+	border: 1px solid red;
+}
