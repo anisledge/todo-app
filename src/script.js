@@ -55,20 +55,28 @@ var TodoList = React.createClass({
 				'Call Henry',
 				'Pay Phone Bills',
 				'Make Dentist Appointment'
-			]
+			],
+			text: ""
 		};
 	},
-	add: function() {
+	onChange: function(e) {
+		this.setState({text: e.target.value});
+	},
+	add: function(e) {
 		var arr = this.state.todos;
 		var newTodo = this.newTodo.value;
-		arr.push(newTodo);
-		this.setState({todos: arr});
+		if(!newTodo) {
+			e.preventDefault();
+		} else {
+			arr.push(newTodo);
+			this.setState({todos: arr, text: ""});
+
+		}
 	},
 	remove: function(i) {
 		var arr = this.state.todos;
 		arr.splice(i, 1);
 		this.setState({todos: arr});
-		console.log('Todo: ' + (i+1) + ' removed');
 	},
 	update: function(newValue, i) {
 		var arr = this.state.todos;
@@ -91,7 +99,7 @@ var TodoList = React.createClass({
 
 				  <div className="form-inline">
 					<div className="form-group">
-						<input ref={(ref) => this.newTodo = ref} className="form-control" placeholder="Add Todo" />
+						<input ref={(ref) => this.newTodo = ref} className="form-control" placeholder="Add Todo" value={this.state.text} onChange={this.onChange}/>
 						<button onClick={this.add} className="btn btn-default btn-sm">+</button>
 					</div>
 				  </div>
