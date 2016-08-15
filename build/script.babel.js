@@ -61,7 +61,9 @@ var TodoList = React.createClass({
 	getInitialState: function getInitialState() {
 		return {
 			todos: ['Call Henry', 'Pay Phone Bills', 'Make Dentist Appointment'],
-			text: ""
+			text: "",
+			placeholder: "Add Todo",
+			input_style: "form-control"
 		};
 	},
 	onChange: function onChange(e) {
@@ -72,9 +74,10 @@ var TodoList = React.createClass({
 		var newTodo = this.newTodo.value;
 		if (!newTodo) {
 			e.preventDefault();
+			this.setState({ placeholder: "Please Add Todo", input_style: "form-control red" });
 		} else {
 			arr.push(newTodo);
-			this.setState({ todos: arr, text: "" });
+			this.setState({ todos: arr, text: "", placeholder: "Add Todo", input_style: "form-control" });
 		}
 	},
 	remove: function remove(i) {
@@ -116,7 +119,7 @@ var TodoList = React.createClass({
 					{ className: "form-group" },
 					React.createElement("input", { ref: function ref(_ref2) {
 							return _this2.newTodo = _ref2;
-						}, className: "form-control", placeholder: "Add Todo", value: this.state.text, onChange: this.onChange }),
+						}, className: this.state.input_style, placeholder: this.state.placeholder, value: this.state.text, onChange: this.onChange }),
 					React.createElement(
 						"button",
 						{ onClick: this.add, className: "btn btn-default btn-sm" },

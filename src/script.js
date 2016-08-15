@@ -56,7 +56,9 @@ var TodoList = React.createClass({
 				'Pay Phone Bills',
 				'Make Dentist Appointment'
 			],
-			text: ""
+			text: "",
+			placeholder: "Add Todo",
+			input_style: "form-control" 
 		};
 	},
 	onChange: function(e) {
@@ -67,9 +69,10 @@ var TodoList = React.createClass({
 		var newTodo = this.newTodo.value;
 		if(!newTodo) {
 			e.preventDefault();
+			this.setState({placeholder: "Please Add Todo", input_style: "form-control red"});
 		} else {
 			arr.push(newTodo);
-			this.setState({todos: arr, text: ""});
+			this.setState({todos: arr, text: "", placeholder: "Add Todo", input_style: "form-control"});
 
 		}
 	},
@@ -99,7 +102,7 @@ var TodoList = React.createClass({
 
 				  <div className="form-inline">
 					<div className="form-group">
-						<input ref={(ref) => this.newTodo = ref} className="form-control" placeholder="Add Todo" value={this.state.text} onChange={this.onChange}/>
+						<input ref={(ref) => this.newTodo = ref} className={this.state.input_style} placeholder={this.state.placeholder} value={this.state.text} onChange={this.onChange}/>
 						<button onClick={this.add} className="btn btn-default btn-sm">+</button>
 					</div>
 				  </div>
